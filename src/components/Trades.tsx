@@ -78,7 +78,7 @@ export default function Trades ( { trades, isExitTrade, onShowNotification }: Tr
 
       {/* Conditional rendering of the TradeHistory component as a modal */}
       {selectedTrade && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
           <div className="retro-panel p-6 shadow-lg w-full max-w-4xl">
             <TradeHistory trade={selectedTrade} closePopup={closePopup} symbol={trades[ 0 ]?.symbol} />
           </div>
