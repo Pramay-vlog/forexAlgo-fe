@@ -1,5 +1,5 @@
 export const CURRENCY_PAIRS = [
-  'BTCUSDT - Bitcoin to USDT',
+  'BTCUSDm - Bitcoin to USDT',
   'XAUUSDm - Gold to USD',
   'XAUEUR - Gold to EUR',
   'EURUSD - Euro to USD',
