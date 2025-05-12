@@ -111,8 +111,8 @@ export default function AddTradeDialog ( {
               className="retro-input w-full"
               value={formData.ECLIPSE_BUFFER}
               onChange={( e ) => setFormData( { ...formData, ECLIPSE_BUFFER: parseFloat( e.target.value ) } )}
-              min="0.10"
-              step="0.10"
+              min="0.01"
+              step="0.01"
             />
           </div>
 
