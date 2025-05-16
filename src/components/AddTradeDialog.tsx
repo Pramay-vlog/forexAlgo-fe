@@ -134,7 +134,7 @@ export default function AddTradeDialog ( {
             <input
               type="number"
               className="retro-input w-full"
-              value={formData.volume}
+              value={formData.tradeBuffer}
               onChange={( e ) => setFormData( { ...formData, tradeBuffer: parseFloat( e.target.value ) } )}
               min="0.01"
               step="0.01"
