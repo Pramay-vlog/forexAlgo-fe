@@ -34,6 +34,7 @@ export default function Trades ( { trades, isExitTrade, onShowNotification }: Tr
               <th className="py-2">GAP</th>
               <th className="py-2">VOLUME</th>
               <th className="py-2">ECLIPSE BUFFER</th>
+              <th className="py-2">TRADE BUFFER</th>
               <th className="py-2">STATE</th>
               <th className="py-2">ACTION</th>
             </tr>
@@ -52,6 +53,7 @@ export default function Trades ( { trades, isExitTrade, onShowNotification }: Tr
                 <td className="py-2">{trade.gap}</td>
                 <td className="py-2">{trade.volume}</td>
                 <td className="py-2">{trade.eclipseBuffer}</td>
+                <td className="py-2">{trade.tradeBuffer}</td>
                 <td className="py-2">
                   {trade.isActive ? (
                     <span className="text-green-500 font-semibold">ACTIVE</span>

@@ -25,6 +25,7 @@ export default function AddTradeDialog ( {
     GAP: 0,
     ECLIPSE_BUFFER: 0,
     volume: 0,
+    tradeBuffer: 0,
   } );
 
   const [ isLoading, setIsLoading ] = useState( false );
@@ -52,11 +53,11 @@ export default function AddTradeDialog ( {
       setIsLoading( false );
     }
 
-    setFormData( { symbol: '', GAP: 0, ECLIPSE_BUFFER: 0, volume: 0 } );
+    setFormData( { symbol: '', GAP: 0, ECLIPSE_BUFFER: 0, volume: 0, tradeBuffer: 0 } );
   };
 
   const onCloseDialog = () => {
-    setFormData( { symbol: '', GAP: 0, ECLIPSE_BUFFER: 0, volume: 0 } );
+    setFormData( { symbol: '', GAP: 0, ECLIPSE_BUFFER: 0, volume: 0, tradeBuffer: 0 } );
     onClose();
   };
 
@@ -123,6 +124,18 @@ export default function AddTradeDialog ( {
               className="retro-input w-full"
               value={formData.volume}
               onChange={( e ) => setFormData( { ...formData, volume: parseFloat( e.target.value ) } )}
+              min="0.01"
+              step="0.01"
+            />
+          </div>
+
+          <div>
+            <label className="block mb-2">Trade Buffer:</label>
+            <input
+              type="number"
+              className="retro-input w-full"
+              value={formData.volume}
+              onChange={( e ) => setFormData( { ...formData, tradeBuffer: parseFloat( e.target.value ) } )}
               min="0.01"
               step="0.01"
             />
