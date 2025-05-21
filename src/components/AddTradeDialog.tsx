@@ -25,7 +25,7 @@ export default function AddTradeDialog ( {
     GAP: 0,
     ECLIPSE_BUFFER: 0,
     volume: 0,
-    tradeBuffer: 0,
+    strategy: '',
   } );
 
   const [ isLoading, setIsLoading ] = useState( false );
@@ -53,11 +53,11 @@ export default function AddTradeDialog ( {
       setIsLoading( false );
     }
 
-    setFormData( { symbol: '', GAP: 0, ECLIPSE_BUFFER: 0, volume: 0, tradeBuffer: 0 } );
+    setFormData( { symbol: '', GAP: 0, ECLIPSE_BUFFER: 0, volume: 0, strategy: '' } );
   };
 
   const onCloseDialog = () => {
-    setFormData( { symbol: '', GAP: 0, ECLIPSE_BUFFER: 0, volume: 0, tradeBuffer: 0 } );
+    setFormData( { symbol: '', GAP: 0, ECLIPSE_BUFFER: 0, volume: 0, strategy: '' } );
     onClose();
   };
 
@@ -84,6 +84,27 @@ export default function AddTradeDialog ( {
                 {CURRENCY_PAIRS.map( ( pair ) => (
                   <option key={pair} value={pair}>
                     {pair}
+                  </option>
+                ) )}
+              </select>
+              <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">
+                ▼
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label className="block mb-2">Strategy:</label>
+            <div className="relative">
+              <select
+                className="retro-select w-full"
+                value={formData.strategy}
+                onChange={( e ) => setFormData( { ...formData, strategy: e.target.value } )}
+              >
+                <option value="">Select Strategy</option>
+                {CURRENCY_PAIRS.map( ( strategy ) => (
+                  <option key={strategy} value={strategy}>
+                    {strategy}
                   </option>
                 ) )}
               </select>
@@ -124,18 +145,6 @@ export default function AddTradeDialog ( {
               className="retro-input w-full"
               value={formData.volume}
               onChange={( e ) => setFormData( { ...formData, volume: parseFloat( e.target.value ) } )}
-              min="0.01"
-              step="0.01"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-2">Trade Buffer:</label>
-            <input
-              type="number"
-              className="retro-input w-full"
-              value={formData.tradeBuffer}
-              onChange={( e ) => setFormData( { ...formData, tradeBuffer: parseFloat( e.target.value ) } )}
               min="0.01"
               step="0.01"
             />

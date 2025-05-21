@@ -3,7 +3,7 @@ export interface Trade {
   symbol: string
   gap: number
   eclipseBuffer: number
-  tradeBuffer: number
+  strategy: string
   volume: number
   isActive: boolean
   createdAt: string
@@ -15,7 +15,7 @@ export interface TradeFormData {
   GAP: number;
   ECLIPSE_BUFFER: number;
   volume: number;
-  tradeBuffer: number;
+  strategy: string;
 }
 
 export interface TradeHistoryTypes {

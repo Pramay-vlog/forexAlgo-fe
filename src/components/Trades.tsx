@@ -31,10 +31,10 @@ export default function Trades ( { trades, isExitTrade, onShowNotification }: Tr
             <tr className="text-left border-b-2 border-gray-600">
               <th className="py-2">DATE</th>
               <th className="py-2">CURRENCY PAIR</th>
+              <th className="py-2">STRATEGY</th>
               <th className="py-2">GAP</th>
               <th className="py-2">VOLUME</th>
               <th className="py-2">ECLIPSE BUFFER</th>
-              <th className="py-2">TRADE BUFFER</th>
               <th className="py-2">STATE</th>
               <th className="py-2">ACTION</th>
             </tr>
@@ -50,10 +50,10 @@ export default function Trades ( { trades, isExitTrade, onShowNotification }: Tr
                   {new Date( trade.createdAt ).getDate()}-{new Date( trade.createdAt ).getMonth() + 1}-{new Date( trade.createdAt ).getFullYear()}
                 </td>
                 <td className="py-2">{trade.symbol}</td>
+                <td className="py-2">{trade.strategy}</td>
                 <td className="py-2">{trade.gap}</td>
                 <td className="py-2">{trade.volume}</td>
                 <td className="py-2">{trade.eclipseBuffer}</td>
-                <td className="py-2">{trade.tradeBuffer}</td>
                 <td className="py-2">
                   {trade.isActive ? (
                     <span className="text-green-500 font-semibold">ACTIVE</span>
@@ -104,7 +104,7 @@ export default function Trades ( { trades, isExitTrade, onShowNotification }: Tr
                     GAP: exitTrade.gap,
                     ECLIPSE_BUFFER: exitTrade.eclipseBuffer,
                     volume: exitTrade.volume,
-                    tradeBuffer: exitTrade.tradeBuffer,
+                    strategy: exitTrade.strategy,
                   } )
                   setExitTrade( null );
                   isExitTrade();
