@@ -79,7 +79,7 @@ export default function AddTradeDialog ( {
               className="retro-input w-full"
               value={formData.symbol}
               onChange={(e) => setFormData({ ...formData, symbol: e.target.value })}
-              placeholder="Enter a currency pair from Exness MT5"
+              placeholder="Enter a symbol from Exness MT5"
             />
             </div>
 
