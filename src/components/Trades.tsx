@@ -56,6 +56,8 @@ export default function Trades ( { trades, isExitTrade, onShowNotification }: Tr
                     <span className="text-blue-500 font-semibold">TRAILING - 1</span>
                   ) : trade.strategy === 'STATIC' ? (
                     <span className="text-yellow-500 font-semibold">STATIC - 2</span>
+                  ) : trade.strategy === 'REVERSAL' ? (
+                    <span className="text-pink-500 font-semibold">REVERSAL - 3</span>
                   ) : (
                     <span className="text-red-500 font-semibold">UNKNOWN</span>
                   )}
