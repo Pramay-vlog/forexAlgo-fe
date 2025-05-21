@@ -153,7 +153,7 @@ export default function AddTradeDialog ( {
             <Button
               type="submit"
               className="retro-button bg-green-700 hover:bg-green-600 disabled:bg-gray-500 disabled:cursor-not-allowed"
-              disabled={!formData.symbol || !formData.GAP || !formData.ECLIPSE_BUFFER || !formData.volume || isLoading}
+              disabled={!formData.symbol || !formData.strategy || (formData.strategy === 'TRAILING' && !formData.GAP) || !formData.ECLIPSE_BUFFER || !formData.volume || isLoading}
               isLoading={isLoading}
             >
               EXECUTE
