@@ -8,37 +8,34 @@ import toast, { Toaster } from 'react-hot-toast';
 
 function App () {
   const [ isDialogOpen, setIsDialogOpen ] = useState( false );
-  const [ trades, setTrades ] = useState<Trade[]>( [] ); // Initialize with an empty array
+  const [ trades, setTrades ] = useState<Trade[]>( [] );
 
-  // Fetch trades from the server
   const fetchTrades = async () => {
     try {
       const response = await axiosInstance.get( '/trade' );
-      setTrades( response.data.payload ); // Set new trade data
+      setTrades( response.data.payload );
     } catch ( error ) {
       console.error( 'Error fetching trades:', error );
     }
   };
 
   useEffect( () => {
-    fetchTrades(); // Initial fetch of trades on component mount
+    fetchTrades();
   }, [] );
 
-  // Handle adding a new trade
   const handleAddTrade = () => {
-    setIsDialogOpen( false ); // Close the dialog after submission
+    setIsDialogOpen( false );
   };
 
-  // This function will be called once a trade is added successfully
   const handleTradeTempor = () => {
-    fetchTrades(); // Refetch trades after adding a new one
+    fetchTrades();
   };
 
   const handleShowNotification = ( message: string, type: 'success' | 'error' ) => {
     if ( type === 'success' ) {
       toast.success( message, {
         duration: 3000,
-        position: 'top-right',
+        position: 'top-center',
         style: {
           background: '#4CAF50',
           color: '#fff',
@@ -47,7 +44,7 @@ function App () {
     } else if ( type === 'error' ) {
       toast.error( message, {
         duration: 3000,
-        position: 'top-right',
+        position: 'top-center',
         style: {
           background: '#F44336',
           color: '#fff',
@@ -66,21 +63,21 @@ function App () {
           </div>
           <button
             className="retro-button"
-            onClick={() => setIsDialogOpen( true )} // Open the dialog
+            onClick={() => setIsDialogOpen( true )}
           >
             <Plus className="inline-block mr-2" size={16} />
             NEW TRADE
           </button>
         </div>
 
-        <Trades trades={trades} isExitTrade={handleTradeTempor} onShowNotification={handleShowNotification} /> {/* Pass the updated trades data */}
+        <Trades trades={trades} isExitTrade={handleTradeTempor} onShowNotification={handleShowNotification} />
 
         <AddTradeDialog
           open={isDialogOpen}
           onClose={() => setIsDialogOpen( false )}
           onSubmit={handleAddTrade}
-          onTradeAdded={handleTradeTempor} // Pass onTradeAdded as a prop
-          onShowNotification={handleShowNotification} // Pass onShowNotification as a prop
+          onTradeAdded={handleTradeTempor}
+          onShowNotification={handleShowNotification}
         />
 
         <Toaster />

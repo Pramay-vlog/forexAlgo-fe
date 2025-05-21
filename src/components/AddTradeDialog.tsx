@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import { TradeFormData } from '../types';
 import { axiosInstance } from '../api/base';
-import { CURRENCY_PAIRS } from '../config';
+import { CURRENCY_PAIRS, STRATEGIES } from '../config';
 import Button from './Button';
 
 interface AddTradeDialogProps {
@@ -102,7 +102,7 @@ export default function AddTradeDialog ( {
                 onChange={( e ) => setFormData( { ...formData, strategy: e.target.value } )}
               >
                 <option value="">Select Strategy</option>
-                {CURRENCY_PAIRS.map( ( strategy ) => (
+                {STRATEGIES.map( ( strategy ) => (
                   <option key={strategy} value={strategy}>
                     {strategy}
                   </option>

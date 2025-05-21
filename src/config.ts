@@ -9,3 +9,8 @@ export const CURRENCY_PAIRS = [
   'AUDUSD - Australian Dollar to USD',
   'USDCAD - USD to Canadian Dollar',
 ];
+
+export const STRATEGIES = [
+  'TRAILING',
+  'STATIC',
+]
