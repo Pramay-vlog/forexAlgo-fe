@@ -51,10 +51,13 @@ export default function Trades ( { trades, isExitTrade, onShowNotification }: Tr
                 </td>
                 <td className="py-2">{trade.symbol}</td>
                 <td className="py-2">
+                  {/* add 2 conditions for both strategies. */}
                   {trade.strategy === 'TRAILING' ? (
                     <span className="text-blue-500 font-semibold">TRAILING - 1</span>
-                  ) : (
+                  ) : trade.strategy === 'STATIC' ? (
                     <span className="text-yellow-500 font-semibold">STATIC - 2</span>
+                  ) : (
+                    <span className="text-red-500 font-semibold">UNKNOWN</span>
                   )}
                 </td>
                 <td className="py-2">{trade.gap}</td>
