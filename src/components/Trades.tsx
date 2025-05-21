@@ -50,7 +50,13 @@ export default function Trades ( { trades, isExitTrade, onShowNotification }: Tr
                   {new Date( trade.createdAt ).getDate()}-{new Date( trade.createdAt ).getMonth() + 1}-{new Date( trade.createdAt ).getFullYear()}
                 </td>
                 <td className="py-2">{trade.symbol}</td>
-                <td className="py-2">{trade.strategy}</td>
+                <td className="py-2">
+                  {trade.strategy === 'TRAILING' ? (
+                    <span className="text-blue-500 font-semibold">TRAILING - 1</span>
+                  ) : (
+                    <span className="text-yellow-500 font-semibold">STATIC - 2</span>
+                  )}
+                </td>
                 <td className="py-2">{trade.gap}</td>
                 <td className="py-2">{trade.volume}</td>
                 <td className="py-2">{trade.eclipseBuffer}</td>
