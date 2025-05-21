@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import { TradeFormData } from '../types';
 import { axiosInstance } from '../api/base';
-import { CURRENCY_PAIRS, STRATEGIES } from '../config';
+import { STRATEGIES } from '../config';
 import Button from './Button';
 
 interface AddTradeDialogProps {
@@ -72,16 +72,16 @@ export default function AddTradeDialog ( {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
+          <div>
             <label className="block mb-2">Currency Pair:</label>
             <input
               type="text"
               className="retro-input w-full"
               value={formData.symbol}
-              onChange={(e) => setFormData({ ...formData, symbol: e.target.value })}
+              onChange={( e ) => setFormData( { ...formData, symbol: e.target.value } )}
               placeholder="Enter a symbol from Exness MT5"
             />
-            </div>
+          </div>
 
           <div>
             <label className="block mb-2">Strategy:</label>
@@ -104,17 +104,19 @@ export default function AddTradeDialog ( {
             </div>
           </div>
 
-          <div>
-            <label className="block mb-2">Pricing Gap:</label>
-            <input
-              type="number"
-              className="retro-input w-full"
-              value={formData.GAP}
-              onChange={( e ) => setFormData( { ...formData, GAP: parseFloat( e.target.value ) } )}
-              min="1"
-              step="1"
-            />
-          </div>
+          {formData.strategy === 'TRAILING' && (
+            <div>
+              <label className="block mb-2">Pricing Gap:</label>
+              <input
+                type="number"
+                className="retro-input w-full"
+                value={formData.GAP}
+                onChange={( e ) => setFormData( { ...formData, GAP: parseFloat( e.target.value ) } )}
+                min="1"
+                step="1"
+              />
+            </div>
+          )}
 
           <div>
             <label className="block mb-2">Eclipse Buffer:</label>
