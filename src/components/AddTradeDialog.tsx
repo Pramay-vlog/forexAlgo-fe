@@ -72,26 +72,16 @@ export default function AddTradeDialog ( {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
+            <div>
             <label className="block mb-2">Currency Pair:</label>
-            <div className="relative">
-              <select
-                className="retro-select w-full"
-                value={formData.symbol}
-                onChange={( e ) => setFormData( { ...formData, symbol: e.target.value } )}
-              >
-                <option value="">Select Pair</option>
-                {CURRENCY_PAIRS.map( ( pair ) => (
-                  <option key={pair} value={pair}>
-                    {pair}
-                  </option>
-                ) )}
-              </select>
-              <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">
-                ▼
-              </div>
+            <input
+              type="text"
+              className="retro-input w-full"
+              value={formData.symbol}
+              onChange={(e) => setFormData({ ...formData, symbol: e.target.value })}
+              placeholder="Enter currency a pair from Exness MT5"
+            />
             </div>
-          </div>
 
           <div>
             <label className="block mb-2">Strategy:</label>
