@@ -112,8 +112,8 @@ export default function AddTradeDialog ( {
                 className="retro-input w-full"
                 value={formData.GAP}
                 onChange={( e ) => setFormData( { ...formData, GAP: parseFloat( e.target.value ) } )}
-                min="1"
-                step="1"
+                min="0.25"
+                step="0.25"
               />
             </div>
           )}
