@@ -114,7 +114,7 @@ export default function AddTradeDialog ( {
                   checked={formData.direction === 'BUY'}
                   onChange={() => setFormData( { ...formData, direction: 'BUY' } )}
                 />
-                <span className="text-green-400 font-bold p-1">BUY</span>
+                <span className="text-pink-400 font-bold p-1">BUY</span>
               </label>
               <label className="flex items-center cursor-pointer">
                 <input
@@ -177,7 +177,7 @@ export default function AddTradeDialog ( {
             <Button
               type="submit"
               className="retro-button bg-green-700 hover:bg-green-600 disabled:bg-gray-500 disabled:cursor-not-allowed"
-              disabled={!formData.symbol || !formData.strategy || ( ( formData.strategy === 'TRAILING' || formData.strategy === 'REVERSAL' ) && !formData.GAP ) || !formData.ECLIPSE_BUFFER || !formData.volume || isLoading}
+              disabled={!formData.symbol || !formData.strategy || ( ( formData.strategy === 'TRAILING' || formData.strategy === 'REVERSAL' ) && !formData.GAP ) || !formData.ECLIPSE_BUFFER || !formData.volume || (formData.strategy === 'REVERSAL' && !formData.direction) || isLoading}
               isLoading={isLoading}
             >
               EXECUTE
