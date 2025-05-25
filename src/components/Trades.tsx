@@ -116,6 +116,7 @@ export default function Trades ( { trades, isExitTrade, onShowNotification }: Tr
                     ECLIPSE_BUFFER: exitTrade.eclipseBuffer,
                     volume: exitTrade.volume,
                     strategy: exitTrade.strategy,
+                    direction: exitTrade.direction || '',
                   } )
                   setExitTrade( null );
                   isExitTrade();

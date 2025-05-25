@@ -4,6 +4,7 @@ export interface Trade {
   gap: number
   eclipseBuffer: number
   strategy: string
+  direction?: string
   volume: number
   isActive: boolean
   createdAt: string
