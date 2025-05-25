@@ -26,6 +26,7 @@ export default function AddTradeDialog ( {
     ECLIPSE_BUFFER: 0,
     volume: 0,
     strategy: '',
+    direction: '',
   } );
 
   const [ isLoading, setIsLoading ] = useState( false );
@@ -115,6 +116,30 @@ export default function AddTradeDialog ( {
                 min="0.25"
                 step="0.25"
               />
+            </div>
+          )}
+
+          {/* if the strategy is reversal, Add 2 radios for key direction called (BUY, SELL) */}
+          {formData.strategy === 'REVERSAL' && (
+            <div className="flex gap-4">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  className="mr-2"
+                  checked={formData.direction === 'BUY'}
+                  onChange={() => setFormData( { ...formData, direction: 'BUY' } )}
+                />
+                BUY
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  className="mr-2"
+                  checked={formData.direction === 'SELL'}
+                  onChange={() => setFormData( { ...formData, direction: 'SELL' } )}
+                />
+                SELL
+              </label>
             </div>
           )}
 

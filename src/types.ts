@@ -16,6 +16,7 @@ export interface TradeFormData {
   ECLIPSE_BUFFER: number;
   volume: number;
   strategy: string;
+  direction?: string;
 }
 
 export interface TradeHistoryTypes {
