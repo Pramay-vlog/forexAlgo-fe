@@ -24,4 +24,14 @@
   .retro-select {
     @apply retro-input appearance-none pr-8;
   }
+
+  .retro-radio {
+    @apply border-2 border-green-400 bg-gray-800 rounded-full w-5 h-5 appearance-none align-middle transition-colors duration-150;
+    box-shadow: 0 0 0 2px #222 inset;
+    position: relative;
+  }
+  .retro-radio:checked {
+    @apply bg-green-400 border-green-400;
+    box-shadow: 0 0 0 2px #222 inset;
+  }
 }
