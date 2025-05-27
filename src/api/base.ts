@@ -8,10 +8,7 @@ export const axiosInstance = axiosApi;
 axiosInstance.interceptors.request.use(
     ( config ) => {
         const tokenString = localStorage.getItem( "token" );
-        if ( tokenString ) {
-            const token = tokenString ? JSON.parse( tokenString ) : null;
-            config.headers.Authorization = `Token ${ token }`;
-        }
+        config.headers["x-auth-token"] = tokenString || null;
         return config;
     },
     ( error ) => {
@@ -21,7 +18,6 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
     ( response ) => {
-        console.log( "Response:", response );
         return response;
     },
     ( error ) => {
