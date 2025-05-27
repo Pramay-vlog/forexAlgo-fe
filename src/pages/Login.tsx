@@ -23,6 +23,10 @@ const Login = () => {
 
         try {
             const res = await axiosInstance.post( '/user/signin', { accountId, password } );
+            if (!res.data.payload.success) {
+                toast.error( 'Login failed' );
+                return;
+            }
             localStorage.setItem( 'accountId', res.data.payload.accountId );
             toast.success( 'Login successful!' );
             navigate( '/' );

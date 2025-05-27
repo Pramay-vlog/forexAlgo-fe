@@ -23,6 +23,10 @@ const Signup = () => {
 
         try {
             const res = await axiosInstance.post( '/user/signup', { accountId, password } );
+            if (!res.data.payload.success) {
+                toast.error( 'Signup failed' );
+                return;
+            }
             localStorage.setItem( 'accountId', res.data.payload.accountId );
             toast.success( 'Signup successful!' );
             navigate( '/' );
