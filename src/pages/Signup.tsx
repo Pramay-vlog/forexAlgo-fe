@@ -22,7 +22,7 @@ const Signup = () => {
 
         try {
             const res = await axiosInstance.post( '/user/signup', { accountId, password } );
-            localStorage.setItem( 'accountId', res.data.accountId );
+            localStorage.setItem( 'accountId', res.data.payload.accountId );
             toast.success( 'Signup successful!' );
             navigate( '/' );
         } catch ( err: any ) {
