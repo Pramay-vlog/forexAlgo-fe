@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { axiosInstance } from '../api/base';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, Link } from 'react-router-dom';
 import { AxiosError } from 'axios';
 
@@ -23,21 +23,19 @@ const Signup = () => {
 
         try {
             const res = await axiosInstance.post( '/user/signup', { accountId, password } );
-            if (!res.data.payload.success) {
-                toast.error( 'Signup failed' );
-                return;
-            }
             localStorage.setItem( 'accountId', res.data.payload.accountId );
             toast.success( 'Signup successful!' );
             navigate( '/' );
-        } catch ( err) {
+        } catch ( err ) {
             const error = err as AxiosError<{ message: string }>;
+            console.log('🚀 ~ handleSignup ~ error:', error);
             toast.error( error.response?.data?.message || 'Signup failed' );
         }
     };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-800 text-green-400 font-mono">
+            <Toaster position="top-center" />
             <div className="retro-panel w-full max-w-md">
                 <h2 className="text-2xl mb-4 font-bold">SIGN UP</h2>
 

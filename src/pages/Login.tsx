@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { axiosInstance } from '../api/base';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, Link } from 'react-router-dom';
 import { AxiosError } from 'axios';
 
@@ -23,21 +23,19 @@ const Login = () => {
 
         try {
             const res = await axiosInstance.post( '/user/signin', { accountId, password } );
-            if (!res.data.payload.success) {
-                toast.error( 'Login failed' );
-                return;
-            }
             localStorage.setItem( 'accountId', res.data.payload.accountId );
             toast.success( 'Login successful!' );
             navigate( '/' );
         } catch ( err ) {
             const error = err as AxiosError<{ message: string }>;
-            toast.error( error.response?.data?.message || 'Login failed' );
+            const message = error.response?.data?.message || 'Login failed';
+            toast.error( message );
         }
     };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-800 text-green-400 font-mono">
+            <Toaster position="top-center" />
             <div className="retro-panel w-full max-w-md">
                 <h2 className="text-2xl mb-4 font-bold">LOGIN</h2>
 
@@ -45,7 +43,7 @@ const Login = () => {
                     type="text"
                     placeholder="Account ID"
                     value={accountId}
-                    onChange={e => setAccountId( e.target.value )}
+                    onChange={( e ) => setAccountId( e.target.value )}
                     className="retro-input w-full mb-1"
                 />
                 {errors.accountId && (
@@ -56,7 +54,7 @@ const Login = () => {
                     type="password"
                     placeholder="Password"
                     value={password}
-                    onChange={e => setPassword( e.target.value )}
+                    onChange={( e ) => setPassword( e.target.value )}
                     className="retro-input w-full mb-1"
                 />
                 {errors.password && (

@@ -25,13 +25,12 @@ axiosInstance.interceptors.response.use(
         return response;
     },
     ( error ) => {
-        console.log( "Error response:", error.response );
         if ( error.response && error.response.status === 401 ) {
             console.log( "Unauthorized, redirecting to login..." );
-            // localStorage.clear();
+            localStorage.clear();
+            window.location.href = "/login";
+            window.location.reload();
             // sessionStorage.clear();
-            // window.location.href = "/register";
-            // window.location.reload();
         }
         return Promise.reject( error );
     }
