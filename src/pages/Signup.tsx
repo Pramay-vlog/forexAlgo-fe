@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { axiosInstance } from '../api/base';
 import toast from 'react-hot-toast';
 import { useNavigate, Link } from 'react-router-dom';
+import { AxiosError } from 'axios';
 
 const Signup = () => {
     const [ accountId, setAccountId ] = useState( '' );
@@ -25,8 +26,9 @@ const Signup = () => {
             localStorage.setItem( 'accountId', res.data.payload.accountId );
             toast.success( 'Signup successful!' );
             navigate( '/' );
-        } catch ( err: any ) {
-            toast.error( err?.response?.data?.message || 'Signup failed' );
+        } catch ( err) {
+            const error = err as AxiosError<{ message: string }>;
+            toast.error( error.response?.data?.message || 'Signup failed' );
         }
     };
 
