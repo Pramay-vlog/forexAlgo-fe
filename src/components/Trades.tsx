@@ -1,18 +1,17 @@
 import { useState } from 'react';
-import { Trade } from '../types';
+import { Trade, TradeFormData } from '../types';
 import TradeHistory from './TradeHistory';
 import Button from './Button';
 import { axiosInstance } from '../api/base';
 
 interface TradesProps {
   trades: Trade[];
-  isExitTrade: () => void
+  isExitTrade: () => void;
   onShowNotification: ( message: string, type: 'success' | 'error' ) => void;
 }
 
 export default function Trades ( { trades, isExitTrade, onShowNotification }: TradesProps ) {
   const [ selectedTrade, setSelectedTrade ] = useState<Trade | null>( null );
-  const [ exitTrade, setExitTrade ] = useState<Trade | null>( null );
 
   const handleRowClick = ( trade: Trade ) => {
     setSelectedTrade( trade );
@@ -20,6 +19,32 @@ export default function Trades ( { trades, isExitTrade, onShowNotification }: Tr
 
   const closePopup = () => {
     setSelectedTrade( null );
+  };
+
+  const handleExitTrade = async ( trade: Trade ) => {
+    const payload: TradeFormData = {
+      symbol: trade.symbol,
+      ECLIPSE_BUFFER: trade.eclipseBuffer,
+      volume: trade.volume,
+      strategy: trade.strategy,
+    };
+
+    if ( trade.strategy !== 'STATIC' ) {
+      payload.GAP = trade.gap;
+    }
+
+    if ( trade.strategy === 'REVERSAL' ) {
+      payload.direction = trade.direction;
+    }
+
+    try {
+      await axiosInstance.post( '/trade', payload );
+      isExitTrade();
+      onShowNotification( 'Trade closed successfully!', 'success' );
+    } catch ( error ) {
+      console.error( 'Error closing trade:', error );
+      onShowNotification( 'Failed to close trade.', 'error' );
+    }
   };
 
   return (
@@ -51,7 +76,6 @@ export default function Trades ( { trades, isExitTrade, onShowNotification }: Tr
                 </td>
                 <td className="py-2">{trade.symbol}</td>
                 <td className="py-2">
-                  {/* add 2 conditions for both strategies. */}
                   {trade.strategy === 'TRAILING' ? (
                     <span className="text-blue-500 font-semibold">TRAILING - 1</span>
                   ) : trade.strategy === 'STATIC' ? (
@@ -77,7 +101,7 @@ export default function Trades ( { trades, isExitTrade, onShowNotification }: Tr
                     disabled={!trade.isActive}
                     onClick={( e ) => {
                       e.stopPropagation();
-                      setExitTrade( trade );
+                      handleExitTrade( trade );
                     }}
                   >
                     EXIT
@@ -97,39 +121,6 @@ export default function Trades ( { trades, isExitTrade, onShowNotification }: Tr
           </div>
         </div>
       )}
-
-      {/* Conditional rendering of the ExitTrade component as a modal */}
-      {exitTrade && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="retro-panel p-6 shadow-lg w-full max-w-md text-center">
-            <h3 className="text-lg font-semibold mb-4">Confirm Exit?</h3>
-            <p className="mb-6">This action is irreversible. Are you sure you want to exit <strong>{exitTrade.symbol}</strong>?</p>
-            <div className="flex justify-center gap-4">
-              <Button onClick={() => setExitTrade( null )}>No, Cancel</Button>
-              <Button
-                className="retro-button bg-green-700 hover:bg-green-600 disabled:bg-gray-500 disabled:cursor-not-allowed"
-                onClick={async () => {
-                  // Add actual exit logic here (e.g., API call)
-                  await axiosInstance.post( '/trade', {
-                    symbol: exitTrade.symbol,
-                    GAP: exitTrade.gap,
-                    ECLIPSE_BUFFER: exitTrade.eclipseBuffer,
-                    volume: exitTrade.volume,
-                    strategy: exitTrade.strategy,
-                    direction: exitTrade.direction || '',
-                  } )
-                  setExitTrade( null );
-                  isExitTrade();
-                  onShowNotification( 'Trade closed successfully!', 'success' )
-                }}
-              >
-                yes, Exit!
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
-
     </div>
   );
 }

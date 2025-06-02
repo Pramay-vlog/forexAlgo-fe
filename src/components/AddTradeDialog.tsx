@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { TradeFormData } from '../types';
 import { axiosInstance } from '../api/base';
@@ -31,6 +31,15 @@ export default function AddTradeDialog ( {
 
   const [ isLoading, setIsLoading ] = useState( false );
 
+  useEffect( () => {
+    if ( open ) {
+      const savedFormData = localStorage.getItem( 'lastTradeForm' );
+      if ( savedFormData ) {
+        setFormData( JSON.parse( savedFormData ) );
+      }
+    }
+  }, [ open ] );
+
   if ( !open ) return null;
 
   const handleSubmit = async ( e: React.FormEvent ) => {
@@ -40,21 +49,42 @@ export default function AddTradeDialog ( {
 
     onSubmit( formData );
 
+    localStorage.setItem( 'lastTradeForm', JSON.stringify( formData ) );
+
     try {
-      formData.symbol = formData.symbol.split( ' - ' )[ 0 ];
-      await axiosInstance.post( '/trade', formData );
+      const payload = { ...formData };
+
+      // Clean the symbol before submission
+      payload.symbol = payload.symbol.split( ' - ' )[ 0 ];
+
+      // Remove GAP if strategy is STATIC (not required)
+      if ( payload.strategy === 'STATIC' ) {
+        delete payload.GAP;
+      }
+
+      // Remove direction if strategy is not REVERSAL
+      if ( payload.strategy !== 'REVERSAL' ) {
+        delete payload.direction;
+      }
+
+      await axiosInstance.post( '/trade', payload );
       onTradeAdded();
       onShowNotification( 'Trade executed successfully!', 'success' );
-
     } catch ( error ) {
       console.error( 'Error executing trade:', error );
       onShowNotification( 'Failed to execute trade.', 'error' );
-
     } finally {
       setIsLoading( false );
     }
 
-    setFormData( { symbol: '', GAP: 0, ECLIPSE_BUFFER: 0, volume: 0, strategy: '' } );
+    setFormData( {
+      symbol: '',
+      GAP: 0,
+      ECLIPSE_BUFFER: 0,
+      volume: 0,
+      strategy: '',
+      direction: '',
+    } );
   };
 
   const onCloseDialog = () => {
@@ -177,7 +207,7 @@ export default function AddTradeDialog ( {
             <Button
               type="submit"
               className="retro-button bg-green-700 hover:bg-green-600 disabled:bg-gray-500 disabled:cursor-not-allowed"
-              disabled={!formData.symbol || !formData.strategy || ( ( formData.strategy === 'TRAILING' || formData.strategy === 'REVERSAL' ) && !formData.GAP ) || !formData.ECLIPSE_BUFFER || !formData.volume || (formData.strategy === 'REVERSAL' && !formData.direction) || isLoading}
+              disabled={!formData.symbol || !formData.strategy || ( ( formData.strategy === 'TRAILING' || formData.strategy === 'REVERSAL' ) && !formData.GAP ) || !formData.ECLIPSE_BUFFER || !formData.volume || ( formData.strategy === 'REVERSAL' && !formData.direction ) || isLoading}
               isLoading={isLoading}
             >
               EXECUTE

@@ -13,7 +13,7 @@ export interface Trade {
 
 export interface TradeFormData {
   symbol: string;
-  GAP: number;
+  GAP?: number;
   ECLIPSE_BUFFER: number;
   volume: number;
   strategy: string;
